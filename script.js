@@ -27,7 +27,7 @@ class Do {
     }
 }
 
-function ragaca() {
+function domGenerator() {
     for (let i = 0; i < filteredArray.length; i++) {
         planArea.innerHTML += `<div class="single_do">
         <div class="check_div ${filteredArray[i].completed == true ? "checked" : ""}"><img src="./images/icon-check.svg" alt="" class="check_icon ${filteredArray[i].completed == true ? "show" : ""}"></div>
@@ -41,13 +41,13 @@ function createDoDiv(filter) {
     planArea.innerHTML = null;
     if (filter == "all") {
         filteredArray = data;
-        ragaca();
+        domGenerator();
     } else if (filter == "active") {
         filteredArray = data.filter((element) => element.completed == false);
-        ragaca();
+        domGenerator();
     } else {
         filteredArray = data.filter((element) => element.completed == true);
-        ragaca();
+        domGenerator();
     }
 }
 
@@ -92,9 +92,6 @@ input.addEventListener("keypress", function (e) {
 
                 attachDeleteListeners();
             }
-
-            console.log(does);
-            console.log(data);
 
         }
     }
@@ -144,42 +141,42 @@ function checkDoes(index) {
 attachCheckListeners();
 
 function all() {
+    chosen = "all";
     filterActive.classList.remove("active");
     filterCompleted.classList.remove("active");
     showAll.classList.add("active");
     planArea.innerHTML = null;
     filteredArray = data;
 
-    ragaca();
+    domGenerator();
     attachCheckListeners();
     attachDeleteListeners();
-    chosen = "all";
 }
 showAll.addEventListener("click", all)
 
 function filter1() {
+    chosen = "active"
     filterCompleted.classList.remove("active");
     showAll.classList.remove("active");
     filterActive.classList.add("active");
     planArea.innerHTML = null;
 
     filteredArray = data.filter((element) => element.completed == false);
-    ragaca();
+    domGenerator();
 
     attachCheckListeners();
     attachDeleteListeners();
-    chosen = "active"
 }
 filterActive.addEventListener("click", filter1)
 
 function filter2() {
+    chosen = "completed"
     showAll.classList.remove("active");
     filterActive.classList.remove("active");
     filterCompleted.classList.add("active");
     planArea.innerHTML = null;
     filteredArray = data.filter((element) => element.completed == true);
-    ragaca();
-    chosen = "completed"
+    domGenerator();
 
     attachCheckListeners();
     attachDeleteListeners();
@@ -210,7 +207,8 @@ function deleteDo(index) {
     }
 
     planArea.innerHTML = null;
-    ragaca();
+    domGenerator();
+    attachCheckListeners();
     attachDeleteListeners();
 }
 
@@ -235,7 +233,7 @@ mode.addEventListener("click", function () {
     lower.classList.toggle("dark_div");
     input.classList.toggle("dark_div");
     const ul = document.querySelector("ul");
-    ul.classList.toggle("dark_div");
+    ul.classList.toggle("dark_ul");
     const headerImg = document.querySelector("#header");
 
     if (headerImg.src.includes('light')) {
